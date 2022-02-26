@@ -17,9 +17,11 @@ import java.util.UUID;
 public class AppUserService implements UserDetailsService {
     
     private final static  String USER_NOT_FOUND_MESSAGE = "user with email %s not found";
+    
     private final AppUserRepository appUserRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final ConfirmationTokenService confirmationTokenService;
+    
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         return appUserRepository.findByEmail(email).orElseThrow(() ->
@@ -30,6 +32,10 @@ public class AppUserService implements UserDetailsService {
         boolean userExists = appUserRepository.findByEmail(appUser.getEmail()).isPresent();
         
         if (userExists){
+            
+            //TODO check of attributes are the same and
+            //TODO if email not confirmed send confirmation email.
+            
             throw new IllegalStateException("email already taken");
         }
         
@@ -51,6 +57,10 @@ public class AppUserService implements UserDetailsService {
         
         //TODO: Send Email
         return token;
+    }
+    
+    public int enableAppUser(String email) {
+        return appUserRepository.enableAppUser(email);
     }
     
 }

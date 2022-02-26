@@ -38,7 +38,7 @@ public class AppUser implements UserDetails {
     @Enumerated(EnumType.STRING)
     private AppUserRole appUserRole;
     private Boolean isLocked = false;
-    private Boolean isEnabled = false;
+    private Boolean enabled = false;
     
     public AppUser(String firstName,
                    String lastName,
@@ -94,6 +94,6 @@ public class AppUser implements UserDetails {
     
     @Override
     public boolean isEnabled() {
-        return isEnabled;
+        return enabled;
     }
 }
